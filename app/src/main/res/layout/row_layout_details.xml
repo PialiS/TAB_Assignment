@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="5dip">
+
+    <!-- Thumbnail image left side -->
+    <LinearLayout
+        android:id="@+id/thumbnail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="5dip"
+        android:padding="3dip">
+
+        <ImageView
+            android:id="@+id/thumbnail_image"
+            android:layout_width="80dp"
+            android:layout_height="100dp"
+            android:src="@drawable/filter" />
+
+    </LinearLayout>
+
+    <!-- Title Of Comics-->
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:text="Title"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:typeface="sans" />
+
+    <!--Description  -->
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"
+        android:layout_marginTop="4dip"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:text="Description" />
+
+    <!-- Author -->
+    <TextView
+        android:id="@+id/author"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/description"
+        android:layout_marginTop="2dip"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:text="ABC" />
+
+    <!-- Price -->
+    <TextView
+        android:id="@+id/price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/author"
+        android:layout_marginTop="2dip"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:text="$30" />
+
+    <View
+
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/thumbnail"
+        android:background="@android:color/darker_gray" />
+
+    <!-- PageCount Text -->
+    <TextView
+        android:id="@+id/pageCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/thumbnail"
+        android:layout_marginTop="2dip"
+        android:text="Page Count :" />
+
+    <!-- PageCount  -->
+    <TextView
+        android:id="@+id/pageCountText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/pageCount"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="2dip"
+       android:layout_toRightOf="@+id/pageCount"
+        android:layout_marginLeft="8dp"
+        android:text="30 pages" />
+
+    <View
+
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_below="@+id/pageCountText"
+        android:background="@android:color/darker_gray" />
+
+</RelativeLayout>

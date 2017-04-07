@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">TAB</string>
+    <string name="filter">Filter</string>
+    <string name="budget_range">Note: Budget Range-</string>
+    <string name="enter_budget">Enter Budget</string>
+    <string name="check">Check</string>
+
+
+</resources>
