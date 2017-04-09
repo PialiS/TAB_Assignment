@@ -2,6 +2,7 @@ package com.example.appbusinessassignment.presenter;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.widget.Toast;
 
 import com.example.appbusinessassignment.model.ComicsMainResponse;
 import com.example.appbusinessassignment.model.Result;
@@ -39,17 +40,17 @@ public class MainPresenterImpl extends BasePresenter implements MainPresenter{
     public void loadComicsList() {
         mainView.showProgress();
 
-        new ApiClient().getClient().getComicsListResponse(Utils.TIMESTAMP,Utils.LIMIT,Utils.API_KEY,Utils.HASH).enqueue(new Callback<JSONObject>() {
+        new ApiClient().getClient().getComicsListResponse(Utils.TIMESTAMP,Utils.LIMIT,Utils.API_KEY,Utils.HASH).enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<JSONObject> call, Response<JSONObject> response) {
+            public void onResponse(Call<String> call, Response<String> response) {
                 mainView.hideProgress();
-
+                Toast.makeText(context,response.body().toString(),Toast.LENGTH_LONG).show();
 //                ComicsMainResponse comicsMainResponseReceived=response.body();
 //                mainView.displayComicsList(comicsMainResponseReceived.getData().getResults());
             }
 
             @Override
-            public void onFailure(Call<JSONObject> call, Throwable t) {
+            public void onFailure(Call<String> call, Throwable t) {
 
                 mainView.hideProgress();;
                 mainView.showError();

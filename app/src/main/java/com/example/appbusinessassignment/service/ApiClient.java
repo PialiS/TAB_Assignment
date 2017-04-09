@@ -3,13 +3,12 @@ package com.example.appbusinessassignment.service;
 import com.example.appbusinessassignment.model.ComicsMainResponse;
 import com.example.appbusinessassignment.utils.Utils;
 
-import org.json.JSONObject;
-
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
@@ -23,7 +22,7 @@ public class ApiClient {
     public interface ApiInterface {
 
         @GET("v1/public/comics")
-        Call<JSONObject> getComicsListResponse
+        Call<String> getComicsListResponse
                 (@Query("ts") String timeStamp, @Query("limit") String limit, @Query("apikey") String apiKey, @Query("hash") String hash);
 
     }
@@ -35,7 +34,8 @@ public class ApiClient {
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
             OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
-            retrofit = new Retrofit.Builder().baseUrl(Utils.BASE_URL).client(client).addConverterFactory(GsonConverterFactory.create()).build();
+//            retrofit = new Retrofit.Builder().baseUrl(Utils.BASE_URL).client(client).addConverterFactory(GsonConverterFactory.create()).build();
+            retrofit = new Retrofit.Builder().baseUrl(Utils.BASE_URL).client(client).addConverterFactory(ScalarsConverterFactory.create()).build();
 
         }
 
