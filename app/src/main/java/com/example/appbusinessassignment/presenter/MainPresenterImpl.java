@@ -9,6 +9,8 @@ import com.example.appbusinessassignment.service.ApiClient;
 import com.example.appbusinessassignment.utils.Utils;
 import com.example.appbusinessassignment.view.MainView;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,17 +39,17 @@ public class MainPresenterImpl extends BasePresenter implements MainPresenter{
     public void loadComicsList() {
         mainView.showProgress();
 
-        apiClient.getClient().getComicsListResponse(Utils.TIMESTAMP,Utils.LIMIT,Utils.API_KEY,Utils.HASH).enqueue(new Callback<ComicsMainResponse>() {
+        new ApiClient().getClient().getComicsListResponse(Utils.TIMESTAMP,Utils.LIMIT,Utils.API_KEY,Utils.HASH).enqueue(new Callback<JSONObject>() {
             @Override
-            public void onResponse(Call<ComicsMainResponse> call, Response<ComicsMainResponse> response) {
+            public void onResponse(Call<JSONObject> call, Response<JSONObject> response) {
                 mainView.hideProgress();
 
-                ComicsMainResponse comicsMainResponseReceived=response.body();
-                mainView.displayComicsList(comicsMainResponseReceived.getData().getResults());
+//                ComicsMainResponse comicsMainResponseReceived=response.body();
+//                mainView.displayComicsList(comicsMainResponseReceived.getData().getResults());
             }
 
             @Override
-            public void onFailure(Call<ComicsMainResponse> call, Throwable t) {
+            public void onFailure(Call<JSONObject> call, Throwable t) {
 
                 mainView.hideProgress();;
                 mainView.showError();

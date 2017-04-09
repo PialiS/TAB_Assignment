@@ -3,6 +3,8 @@ package com.example.appbusinessassignment.service;
 import com.example.appbusinessassignment.model.ComicsMainResponse;
 import com.example.appbusinessassignment.utils.Utils;
 
+import org.json.JSONObject;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -21,14 +23,14 @@ public class ApiClient {
     public interface ApiInterface {
 
         @GET("v1/public/comics")
-        Call<ComicsMainResponse> getComicsListResponse
-                (@Query("ts") long timeStamp, @Query("limit") int limit, @Query("api_key") String apiKey, @Query("hash") String hash);
+        Call<JSONObject> getComicsListResponse
+                (@Query("ts") String timeStamp, @Query("limit") String limit, @Query("apikey") String apiKey, @Query("hash") String hash);
 
     }
 
     public ApiInterface getClient() {
 
-        if (retrofit != null) {
+        if (retrofit == null) {
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
             OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
