@@ -1,6 +1,7 @@
 package com.example.appbusinessassignment.service;
 
 import com.example.appbusinessassignment.model.ComicsMainResponse;
+import com.example.appbusinessassignment.model.VikashDemo;
 import com.example.appbusinessassignment.utils.Utils;
 
 import okhttp3.OkHttpClient;
@@ -22,7 +23,7 @@ public class ApiClient {
     public interface ApiInterface {
 
         @GET("v1/public/comics")
-        Call<String> getComicsListResponse
+        Call<VikashDemo> getComicsListResponse
                 (@Query("ts") String timeStamp, @Query("limit") String limit, @Query("apikey") String apiKey, @Query("hash") String hash);
 
     }
@@ -34,8 +35,8 @@ public class ApiClient {
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
             OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
-//            retrofit = new Retrofit.Builder().baseUrl(Utils.BASE_URL).client(client).addConverterFactory(GsonConverterFactory.create()).build();
-            retrofit = new Retrofit.Builder().baseUrl(Utils.BASE_URL).client(client).addConverterFactory(ScalarsConverterFactory.create()).build();
+            retrofit = new Retrofit.Builder().baseUrl(Utils.BASE_URL).client(client).addConverterFactory(GsonConverterFactory.create()).build();
+//            retrofit = new Retrofit.Builder().baseUrl(Utils.BASE_URL).client(client).addConverterFactory(ScalarsConverterFactory.create()).build();
 
         }
 
