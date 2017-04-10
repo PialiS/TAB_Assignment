@@ -12,7 +12,7 @@ public class Utils {
 
     public  static final String HASH="359e14db6b6a7bed5c31d81b2c00f36b";
 
-    public static String LIMIT="100";
+    public static String LIMIT="1";
 
     public static String TIMESTAMP="1";
 

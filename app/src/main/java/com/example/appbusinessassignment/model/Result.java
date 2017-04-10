@@ -1,9 +1,10 @@
 
 package com.example.appbusinessassignment.model;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 public class Result {
 
@@ -18,7 +19,7 @@ public class Result {
     private String title;
     @SerializedName("issueNumber")
     @Expose
-    private Integer issueNumber;
+    private Double issueNumber;
     @SerializedName("variantDescription")
     @Expose
     private String variantDescription;
@@ -27,7 +28,7 @@ public class Result {
     private String description;
     @SerializedName("modified")
     @Expose
-    private String modified;
+    private Date modified;
     @SerializedName("isbn")
     @Expose
     private String isbn;
@@ -79,8 +80,10 @@ public class Result {
     @SerializedName("thumbnail")
     @Expose
     private Thumbnail thumbnail;
+
     @SerializedName("images")
     @Expose
+
     private List<Image> images = null;
     @SerializedName("creators")
     @Expose
@@ -119,14 +122,6 @@ public class Result {
         this.title = title;
     }
 
-    public Integer getIssueNumber() {
-        return issueNumber;
-    }
-
-    public void setIssueNumber(Integer issueNumber) {
-        this.issueNumber = issueNumber;
-    }
-
     public String getVariantDescription() {
         return variantDescription;
     }
@@ -143,13 +138,6 @@ public class Result {
         this.description = description;
     }
 
-    public String getModified() {
-        return modified;
-    }
-
-    public void setModified(String modified) {
-        this.modified = modified;
-    }
 
     public String getIsbn() {
         return isbn;
@@ -325,6 +313,22 @@ public class Result {
 
     public void setEvents(Events events) {
         this.events = events;
+    }
+
+    public Double getIssueNumber() {
+        return issueNumber;
+    }
+
+    public void setIssueNumber(Double issueNumber) {
+        this.issueNumber = issueNumber;
+    }
+
+    public Date getModified() {
+        return modified;
+    }
+
+    public void setModified(Date modified) {
+        this.modified = modified;
     }
 
 }

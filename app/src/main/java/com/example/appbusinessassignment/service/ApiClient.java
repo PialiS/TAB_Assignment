@@ -1,7 +1,6 @@
 package com.example.appbusinessassignment.service;
 
 import com.example.appbusinessassignment.model.ComicsMainResponse;
-import com.example.appbusinessassignment.model.VikashDemo;
 import com.example.appbusinessassignment.utils.Utils;
 
 import okhttp3.OkHttpClient;
@@ -9,7 +8,6 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.converter.scalars.ScalarsConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
@@ -23,7 +21,7 @@ public class ApiClient {
     public interface ApiInterface {
 
         @GET("v1/public/comics")
-        Call<VikashDemo> getComicsListResponse
+        Call<ComicsMainResponse> getComicsListResponse
                 (@Query("ts") String timeStamp, @Query("limit") String limit, @Query("apikey") String apiKey, @Query("hash") String hash);
 
     }

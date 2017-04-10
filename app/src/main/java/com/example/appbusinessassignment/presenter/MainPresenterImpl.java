@@ -6,12 +6,9 @@ import android.widget.Toast;
 
 import com.example.appbusinessassignment.model.ComicsMainResponse;
 import com.example.appbusinessassignment.model.Result;
-import com.example.appbusinessassignment.model.VikashDemo;
 import com.example.appbusinessassignment.service.ApiClient;
 import com.example.appbusinessassignment.utils.Utils;
 import com.example.appbusinessassignment.view.MainView;
-
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,9 +38,9 @@ public class MainPresenterImpl extends BasePresenter implements MainPresenter{
     public void loadComicsList() {
         mainView.showProgress();
 
-        new ApiClient().getClient().getComicsListResponse(Utils.TIMESTAMP,Utils.LIMIT,Utils.API_KEY,Utils.HASH).enqueue(new Callback<VikashDemo>() {
+        new ApiClient().getClient().getComicsListResponse(Utils.TIMESTAMP,Utils.LIMIT,Utils.API_KEY,Utils.HASH).enqueue(new Callback<ComicsMainResponse>() {
             @Override
-            public void onResponse(Call<VikashDemo> call, Response<VikashDemo> response) {
+            public void onResponse(Call<ComicsMainResponse> call, Response<ComicsMainResponse> response) {
                 mainView.hideProgress();
                 Toast.makeText(context,response.body().toString(),Toast.LENGTH_LONG).show();
 //                ComicsMainResponse comicsMainResponseReceived=response.body();
@@ -51,7 +48,7 @@ public class MainPresenterImpl extends BasePresenter implements MainPresenter{
             }
 
             @Override
-            public void onFailure(Call<VikashDemo> call, Throwable t) {
+            public void onFailure(Call<ComicsMainResponse> call, Throwable t) {
 
                 mainView.hideProgress();;
                 mainView.showError();
