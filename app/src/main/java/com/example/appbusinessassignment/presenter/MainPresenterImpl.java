@@ -4,8 +4,8 @@ import android.app.Fragment;
 import android.content.Context;
 import android.widget.Toast;
 
-import com.example.appbusinessassignment.model.ComicsMainResponse;
-import com.example.appbusinessassignment.model.Result;
+import com.example.appbusinessassignment.model.vikash.Results;
+import com.example.appbusinessassignment.presenter.vikash.ComicsMainResponse;
 import com.example.appbusinessassignment.service.ApiClient;
 import com.example.appbusinessassignment.utils.Utils;
 import com.example.appbusinessassignment.view.MainView;
@@ -24,9 +24,9 @@ import retrofit2.Response;
 public class MainPresenterImpl extends BasePresenter implements MainPresenter{
 
     private MainView mainView;
-    private MainPresenterImpl mMainPresenterImpl;
+    private MainPresenterImpl mainPresenterImpl;
     private ApiClient apiClient;
-    List<Result> comedyResultList=new ArrayList<>();
+    List<Results> comedyResultList=new ArrayList<>();
     private Context context;
 
     public MainPresenterImpl(MainView mainView, Context context) {
@@ -43,8 +43,8 @@ public class MainPresenterImpl extends BasePresenter implements MainPresenter{
             public void onResponse(Call<ComicsMainResponse> call, Response<ComicsMainResponse> response) {
                 mainView.hideProgress();
                 Toast.makeText(context,response.body().toString(),Toast.LENGTH_LONG).show();
-//                ComicsMainResponse comicsMainResponseReceived=response.body();
-//                mainView.displayComicsList(comicsMainResponseReceived.getData().getResults());
+                ComicsMainResponse comicsMainResponseReceived=response.body();
+                mainView.displayComicsList(comicsMainResponseReceived.getData().getResults());
             }
 
             @Override
