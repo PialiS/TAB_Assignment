@@ -10,8 +10,8 @@
         android:id="@+id/thumbnail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_marginRight="5dip"
+        android:layout_alignParentStart="true"
+        android:layout_marginEnd="5dip"
         android:padding="3dip">
 
         <ImageView
@@ -29,6 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_toRightOf="@+id/thumbnail"
+        android:lines="1"
         android:text="Title"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -42,6 +43,7 @@
         android:layout_below="@id/title"
         android:layout_marginTop="4dip"
         android:layout_toRightOf="@+id/thumbnail"
+        android:lines="1"
         android:text="Description" />
 
     <!-- Author -->
@@ -52,6 +54,7 @@
         android:layout_below="@+id/description"
         android:layout_marginTop="2dip"
         android:layout_toRightOf="@+id/thumbnail"
+        android:lines="1"
         android:text="ABC" />
 
     <!-- Price -->
@@ -62,6 +65,7 @@
         android:layout_below="@+id/author"
         android:layout_marginTop="2dip"
         android:layout_toRightOf="@+id/thumbnail"
+        android:lines="1"
         android:text="$30" />
 
     <View
@@ -87,9 +91,9 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/pageCount"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="2dip"
-       android:layout_toRightOf="@+id/pageCount"
         android:layout_marginLeft="8dp"
+        android:layout_marginTop="2dip"
+        android:layout_toRightOf="@+id/pageCount"
         android:text="30 pages" />
 
     <View

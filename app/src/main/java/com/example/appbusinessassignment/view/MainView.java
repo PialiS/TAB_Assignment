@@ -1,6 +1,6 @@
 package com.example.appbusinessassignment.view;
 
-import com.example.appbusinessassignment.model.Result;
+import com.example.appbusinessassignment.model.Results;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ public interface MainView {
     void showProgress();
     void hideProgress();
     void showComicsClicked();
-    void displayComicsList(List<Result> results);
+    void displayComicsList(List<Results> results);
     void showError();
 
 }

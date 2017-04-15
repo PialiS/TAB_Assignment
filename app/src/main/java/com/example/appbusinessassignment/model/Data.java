@@ -1,67 +1,37 @@
-
 package com.example.appbusinessassignment.model;
-
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+/**
+ * Created by Vikash on 16-04-2017.
+ */
+
 public class Data {
 
-    @SerializedName("offset")
-    @Expose
-    private Integer offset;
-    @SerializedName("limit")
-    @Expose
-    private Integer limit;
-    @SerializedName("total")
-    @Expose
-    private Integer total;
-    @SerializedName("count")
-    @Expose
-    private Integer count;
-    @SerializedName("results")
-    @Expose
-    private List<Result> results = null;
+    private int offset;
+    private int limit;
+    private int total;
+    private int count;
 
-    public Integer getOffset() {
+    private List<Results> results;
+
+    public int getOffset() {
         return offset;
     }
 
-    public void setOffset(Integer offset) {
-        this.offset = offset;
-    }
-
-    public Integer getLimit() {
+    public int getLimit() {
         return limit;
     }
 
-    public void setLimit(Integer limit) {
-        this.limit = limit;
-    }
-
-    public Integer getTotal() {
+    public int getTotal() {
         return total;
     }
 
-    public void setTotal(Integer total) {
-        this.total = total;
-    }
-
-    public Integer getCount() {
+    public int getCount() {
         return count;
     }
 
-    public void setCount(Integer count) {
-        this.count = count;
-    }
-
-    public List<Result> getResults() {
+    public List<Results> getResults() {
         return results;
     }
-
-    public void setResults(List<Result> results) {
-        this.results = results;
-    }
-
 }
