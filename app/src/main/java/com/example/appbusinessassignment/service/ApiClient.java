@@ -1,6 +1,6 @@
 package com.example.appbusinessassignment.service;
 
-import com.example.appbusinessassignment.model.ComicsMainResponse;
+import com.example.appbusinessassignment.presenter.vikash.ComicsMainResponse;
 import com.example.appbusinessassignment.utils.Utils;
 
 import okhttp3.OkHttpClient;

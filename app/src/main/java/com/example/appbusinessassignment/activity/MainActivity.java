@@ -3,10 +3,18 @@ package com.example.appbusinessassignment.activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.widget.EditText;
 
 import com.example.appbusinessassignment.R;
+import com.example.appbusinessassignment.adapter.CustomListAdapter;
 import com.example.appbusinessassignment.fragment.MainFragment;
+import com.example.appbusinessassignment.model.vikash.Results;
+import com.example.appbusinessassignment.presenter.MainPresenterImpl;
+import com.example.appbusinessassignment.view.MainView;
+
+import java.util.List;
 
 public class MainActivity extends BaseActivity{
 

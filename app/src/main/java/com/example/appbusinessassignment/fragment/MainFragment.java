@@ -13,8 +13,9 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.example.appbusinessassignment.R;
+import com.example.appbusinessassignment.activity.MainActivity;
 import com.example.appbusinessassignment.adapter.CustomListAdapter;
-import com.example.appbusinessassignment.model.Results;
+import com.example.appbusinessassignment.model.vikash.Results;
 import com.example.appbusinessassignment.presenter.MainPresenterImpl;
 import com.example.appbusinessassignment.view.MainView;
 
