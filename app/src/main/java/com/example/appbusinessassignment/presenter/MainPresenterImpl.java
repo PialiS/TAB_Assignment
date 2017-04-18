@@ -4,8 +4,8 @@ import android.app.Fragment;
 import android.content.Context;
 import android.widget.Toast;
 
-import com.example.appbusinessassignment.model.vikash.Results;
-import com.example.appbusinessassignment.presenter.vikash.ComicsMainResponse;
+import com.example.appbusinessassignment.model.Results;
+import com.example.appbusinessassignment.model.ComicsMainResponse;
 import com.example.appbusinessassignment.service.ApiClient;
 import com.example.appbusinessassignment.utils.Utils;
 import com.example.appbusinessassignment.view.MainView;

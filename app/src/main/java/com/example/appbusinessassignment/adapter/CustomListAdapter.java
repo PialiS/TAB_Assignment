@@ -7,9 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.appbusinessassignment.R;
-import com.example.appbusinessassignment.model.Result;
-import com.example.appbusinessassignment.model.vikash.Results;
-import com.example.appbusinessassignment.view.MainView;
+import com.example.appbusinessassignment.model.Results;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

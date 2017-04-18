@@ -1,7 +1,6 @@
 package com.example.appbusinessassignment.view;
 
-import com.example.appbusinessassignment.model.Result;
-import com.example.appbusinessassignment.model.vikash.Results;
+import com.example.appbusinessassignment.model.Results;
 
 import java.util.List;
 
