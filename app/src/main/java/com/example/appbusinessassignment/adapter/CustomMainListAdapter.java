@@ -18,13 +18,14 @@ import java.util.List;
 
 /**
  * Created by piubips on 22/04/2017.
+ * main list display
  */
 
 public class CustomMainListAdapter extends RecyclerView.Adapter<CustomViewHolder> {
-    Context context;
-    List<Results> resultList;
-    DetailsFragment detailsFragment;
-    String fragmentNameTag;
+    private Context context;
+    private List<Results> resultList;
+    private DetailsFragment detailsFragment;
+    private String fragmentNameTag;
 
 
     public CustomMainListAdapter(Context context, List<Results> resultList) {
@@ -84,7 +85,7 @@ public class CustomMainListAdapter extends RecyclerView.Adapter<CustomViewHolder
             FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
 
             fragmentNameTag = "FragmentDetails";
-            if (mFragmentManager.findFragmentById(R.id.frame_container) == null) {
+            if (mFragmentManager.findFragmentById(R.id.frame_container) != null) {
                 fragmentTransaction.replace(R.id.frame_container, detailsFragment, fragmentNameTag);
 
                 fragmentTransaction.commit();

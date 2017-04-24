@@ -40,7 +40,7 @@ public class CustomListAdapter extends RecyclerView.Adapter<CustomViewHolder> {
         Results results = resultList.get(holder.getAdapterPosition());
 
         //  holder.layoutHolder.setOnClickListener(mClickListener);
-        holder.layoutHolder.setTag(holder);
+//        holder.layoutHolder.setTag(holder);
 
         try {
             holder.textViewPageCount.setText(results.getPageCount() + " Pages");
