@@ -12,7 +12,7 @@ public interface MainView {
 
     void showProgress();
     void hideProgress();
-    void showComicsClicked();
+
     void displayComicsList(List<Results> results);
     void showError();
 
