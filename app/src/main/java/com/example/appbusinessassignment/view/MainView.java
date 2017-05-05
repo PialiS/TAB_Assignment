@@ -14,6 +14,6 @@ public interface MainView {
     void hideProgress();
 
     void displayComicsList(List<Results> results);
-    void showError();
+    void showError(Throwable throwable);
 
 }

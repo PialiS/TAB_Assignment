@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_margin="8dp">
 
     <!-- Title Of Comics-->
     <TextView
@@ -10,9 +14,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:layout_toRightOf="@+id/thumbnail"
         android:lines="1"
-        android:text="Title"
+        android:text=""
         android:textSize="24sp"
         android:textStyle="bold"
         android:typeface="sans" />
@@ -22,7 +25,8 @@
         android:layout_height="300dp"
         android:src="@drawable/filter"
         android:layout_below="@+id/title"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        android:contentDescription="@string/thumbnail" />
 
     <View
 
@@ -37,7 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/view"
-        android:text="Description"
+        android:text=""
         android:layout_marginTop="8dp"
         />
 
@@ -48,9 +52,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/description"
         android:layout_marginTop="2dip"
-        android:layout_toRightOf="@+id/thumbnail"
         android:lines="1"
-        android:text="ABC" />
+        android:text=""
+        android:textStyle="bold"/>
 
     <!-- Price -->
     <TextView
@@ -59,9 +63,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/author"
         android:layout_marginTop="2dip"
-        android:layout_toRightOf="@+id/thumbnail"
         android:lines="1"
-        android:text="$30" />
+        android:text=""
+        android:textStyle="bold"/>
 
 
     <!-- PageCount Text -->
@@ -71,7 +75,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/price"
         android:layout_marginTop="2dip"
-        android:text="Page Count :" />
+        android:text="@string/page_count"
+        android:textStyle="bold"/>
 
     <!-- PageCount  -->
     <TextView
@@ -79,14 +84,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/pageCount"
-        android:layout_alignParentRight="true"
-        android:layout_marginLeft="8dp"
-        android:layout_toRightOf="@+id/pageCount"
-        android:text="30 pages" />
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="8dp"
+        android:layout_toEndOf="@+id/pageCount"
+        android:text=""
+        android:layout_marginBottom="8dp"
+        android:textStyle="bold"/>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="4dp"
-        android:layout_below="@+id/pageCountText"
-        android:background="@android:color/darker_gray" />
+
 </RelativeLayout>
+</ScrollView>

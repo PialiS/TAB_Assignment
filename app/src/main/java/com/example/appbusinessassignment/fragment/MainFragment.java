@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.appbusinessassignment.R;
 import com.example.appbusinessassignment.adapter.CustomMainListAdapter;
@@ -26,7 +27,7 @@ public class MainFragment extends Fragment implements MainView {
 
     ProgressDialog progressDialog;
     MainPresenterImpl presenter;
-    //CustomListAdapter customListAdapter;
+    //CustomDetailsListAdapter customListAdapter;
     CustomMainListAdapter customMainListAdapter;
     RecyclerView recyclerView;
 
@@ -59,7 +60,7 @@ public class MainFragment extends Fragment implements MainView {
     public void displayComicsList(List<Results> results) {
         recyclerView = (RecyclerView)view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-//        customListAdapter = new CustomListAdapter(getActivity(),results);
+//        customListAdapter = new CustomDetailsListAdapter(getActivity(),results);
 //        recyclerView.setAdapter(customListAdapter);
 
         customMainListAdapter=new CustomMainListAdapter(getActivity(),results);
@@ -67,7 +68,7 @@ public class MainFragment extends Fragment implements MainView {
     }
 
     @Override
-    public void showError() {
-
+    public void showError(Throwable throwable) {
+        Toast.makeText(getActivity(), throwable.getMessage().toString(),Toast.LENGTH_LONG).show();
     }
 }

@@ -2,12 +2,12 @@ package com.example.appbusinessassignment.presenter;
 
 import android.app.Fragment;
 import android.content.Context;
-import android.widget.Toast;
 
-import com.example.appbusinessassignment.model.Results;
 import com.example.appbusinessassignment.model.ComicsMainResponse;
+import com.example.appbusinessassignment.model.Results;
 import com.example.appbusinessassignment.service.ApiClient;
 import com.example.appbusinessassignment.utils.Utils;
+import com.example.appbusinessassignment.view.DetailsView;
 import com.example.appbusinessassignment.view.MainView;
 
 import java.util.ArrayList;
@@ -21,41 +21,74 @@ import retrofit2.Response;
  * Created by piubips on 03/04/2017.
  */
 
-public class MainPresenterImpl extends BasePresenter implements MainPresenter{
+public class MainPresenterImpl extends BasePresenter implements MainPresenter {
 
     private MainView mainView;
+    private DetailsView detailsView;
     private MainPresenterImpl mainPresenterImpl;
     private ApiClient apiClient;
-    List<Results> comedyResultList=new ArrayList<>();
+    List<Results> comedyResultList = new ArrayList<>();
     private Context context;
+    ComicsMainResponse comicsMainResponseReceived;
 
     public MainPresenterImpl(MainView mainView, Context context) {
         this.mainView = mainView;
         this.context = context;
     }
 
+    public MainPresenterImpl(DetailsView detailsView, Context context){
+        this.detailsView=detailsView;
+        this.context=context;
+    }
     @Override
     public void loadComicsList() {
         mainView.showProgress();
 
-        new ApiClient().getClient().getComicsListResponse(Utils.TIMESTAMP,Utils.LIMIT,Utils.API_KEY,Utils.HASH).enqueue(new Callback<ComicsMainResponse>() {
+        new ApiClient().getClient().getComicsListResponse(Utils.TIMESTAMP, Utils.LIMIT, Utils.API_KEY, Utils.HASH).enqueue(new Callback<ComicsMainResponse>() {
             @Override
             public void onResponse(Call<ComicsMainResponse> call, Response<ComicsMainResponse> response) {
                 mainView.hideProgress();
-                Toast.makeText(context,response.body().toString(),Toast.LENGTH_LONG).show();
-                ComicsMainResponse comicsMainResponseReceived=response.body();
+                comicsMainResponseReceived = response.body();
                 mainView.displayComicsList(comicsMainResponseReceived.getData().getResults());
+
+               // calculateMaxMinBudget();
             }
 
             @Override
             public void onFailure(Call<ComicsMainResponse> call, Throwable t) {
 
-                mainView.hideProgress();;
-                mainView.showError();
+                mainView.hideProgress();
+                mainView.showError(t);
 
             }
         });
     }
+
+    private Double[] calculateMaxMinBudget() {
+
+        List<Double> priceList;
+        Double[] priceArray = new Double[2];
+        Double minimumPrice, maxmumPrice, priceObtained;
+        for (int i = 0; i < comicsMainResponseReceived.getData().getResults().size(); i++) {
+            priceList = new ArrayList<>();
+            double prices = comicsMainResponseReceived.getData().getResults().get(i).getPrices().get(0).getPrice();
+            priceList.add(prices);
+
+            minimumPrice = priceList.get(0);
+            maxmumPrice = priceList.get(0);
+            priceObtained = priceList.get(i);
+            if (priceObtained < minimumPrice) {
+                minimumPrice = priceObtained;
+            } else if (priceObtained > maxmumPrice) {
+                maxmumPrice = priceObtained;
+            }
+            minimumPrice = priceArray[0];
+            maxmumPrice = priceArray[1];
+
+        }
+        return priceArray;
+    }
+
 
     @Override
     public void navigateToFragment(String FragmentTag, Fragment fragmentName) {
