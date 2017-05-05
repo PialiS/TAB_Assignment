@@ -17,21 +17,21 @@ import java.util.List;
  * Created by piubips on 03/04/2017.
  */
 
-public class CustomListAdapter extends RecyclerView.Adapter<CustomViewHolder> {
+public class CustomDetailsListAdapter extends RecyclerView.Adapter<CustomViewHolder>   {
     Context context;
     List<Results> resultList;
     DetailsFragment detailsFragment;
     String fragmentNameTag;
 
 
-    public CustomListAdapter(Context context, List<Results> resultList) {
+    public CustomDetailsListAdapter(Context context, List<Results> resultList) {
         this.context = context;
         this.resultList = resultList;
     }
 
     @Override
     public CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.row_details, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.row_layout_details, parent, false);
         return new CustomViewHolder(view);
     }
 
@@ -61,7 +61,6 @@ public class CustomListAdapter extends RecyclerView.Adapter<CustomViewHolder> {
         if (results.getPrices() != null && results.getPrices().get(0) != null)
             holder.textViewPrice.setText(String.valueOf(results.getPrices().get(0).getPrice()));
 
-
         try {
             holder.textViewAuthor.setText(results.getCreators().getItems().get(0).getName());
         } catch (Exception e) {
@@ -71,6 +70,8 @@ public class CustomListAdapter extends RecyclerView.Adapter<CustomViewHolder> {
             holder.textViewDescription.setText(results.getDescription().toString());
         if (results.getTitle() != null)
             holder.textViewTitle.setText(results.getTitle());
+
+
 
     }
 
