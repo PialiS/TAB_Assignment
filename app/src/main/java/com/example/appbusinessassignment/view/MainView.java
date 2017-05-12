@@ -14,6 +14,7 @@ public interface MainView {
     void hideProgress();
 
     void displayComicsList(List<Results> results);
+    void displayBudgetRange(double minBudget, double maxBudget);
     void showError(Throwable throwable);
 
 }

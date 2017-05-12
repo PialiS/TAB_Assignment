@@ -51,7 +51,7 @@ public class MainPresenterImpl extends BasePresenter implements MainPresenter {
                 comicsMainResponseReceived = response.body();
                 mainView.displayComicsList(comicsMainResponseReceived.getData().getResults());
 
-               // calculateMaxMinBudget();
+                calculateMaxMinBudget();
             }
 
             @Override
@@ -64,29 +64,35 @@ public class MainPresenterImpl extends BasePresenter implements MainPresenter {
         });
     }
 
-    private Double[] calculateMaxMinBudget() {
 
-        List<Double> priceList;
-        Double[] priceArray = new Double[2];
-        Double minimumPrice, maxmumPrice, priceObtained;
+    @Override
+    public void calculateMaxMinBudget() {
+
+        List<Double> priceList=new ArrayList<>();
+        Double  maxmumPrice, priceObtained;
+        Double minimumPrice;
         for (int i = 0; i < comicsMainResponseReceived.getData().getResults().size(); i++) {
-            priceList = new ArrayList<>();
+
             double prices = comicsMainResponseReceived.getData().getResults().get(i).getPrices().get(0).getPrice();
             priceList.add(prices);
 
             minimumPrice = priceList.get(0);
             maxmumPrice = priceList.get(0);
-            priceObtained = priceList.get(i);
-            if (priceObtained < minimumPrice) {
-                minimumPrice = priceObtained;
-            } else if (priceObtained > maxmumPrice) {
-                maxmumPrice = priceObtained;
+
+            for (int j=0;j<priceList.size();j++){
+                priceObtained = priceList.get(i);
+
+                if (priceObtained < minimumPrice) {
+                    minimumPrice = priceObtained;
+                } else if (priceObtained > maxmumPrice) {
+                    maxmumPrice = priceObtained;
+                }
             }
-            minimumPrice = priceArray[0];
-            maxmumPrice = priceArray[1];
+
+        mainView.displayBudgetRange(minimumPrice,maxmumPrice);
 
         }
-        return priceArray;
+
     }
 
 
