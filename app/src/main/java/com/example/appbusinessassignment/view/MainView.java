@@ -15,5 +15,6 @@ public interface MainView {
 
     void displayComicsList(List<Results> results);
     void showError(Throwable throwable);
+    void displayBudgetRange(double minBudget,double maxBudget);
 
 }
