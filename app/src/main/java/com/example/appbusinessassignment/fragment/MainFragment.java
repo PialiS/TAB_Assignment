@@ -26,8 +26,7 @@ import java.util.List;
 public class MainFragment extends Fragment implements MainView {
 
     ProgressDialog progressDialog;
-    MainPresenterImpl presenter;
-    //CustomDetailsListAdapter customListAdapter;
+    MainPresenterImpl presenter;;
     CustomMainListAdapter customMainListAdapter;
     RecyclerView recyclerView;
 
@@ -60,9 +59,6 @@ public class MainFragment extends Fragment implements MainView {
     public void displayComicsList(List<Results> results) {
         recyclerView = (RecyclerView)view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-//        customListAdapter = new CustomDetailsListAdapter(getActivity(),results);
-//        recyclerView.setAdapter(customListAdapter);
-
         customMainListAdapter=new CustomMainListAdapter(getActivity(),results);
         recyclerView.setAdapter(customMainListAdapter);
     }

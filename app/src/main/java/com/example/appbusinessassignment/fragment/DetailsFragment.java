@@ -37,7 +37,7 @@ public class DetailsFragment extends Fragment implements DetailsView {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.row_details, container, false);
-        // recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+
         initlialiseViews();
         presenter = new MainPresenterImpl(this, getActivity());
         displayComicsDetails();
