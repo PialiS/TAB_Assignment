@@ -10,36 +10,28 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.appbusinessassignment.R;
-import com.example.appbusinessassignment.presenter.MainPresenterImpl;
 import com.example.appbusinessassignment.view.DetailsView;
 import com.squareup.picasso.Picasso;
 
 import static com.example.appbusinessassignment.R.id.thumbnail_image;
 
 /**
- * Created by piubips on 03/04/2017.
+ * Created by Piali on 03/04/2017.
+ * it is details fragment
  */
 
 public class DetailsFragment extends Fragment implements DetailsView {
 
-
-    TextView title, price, author, description, pageCount;
-    String titleReceived, descriptionReceived, authorNameReceived, imagePathReceived;
-    int pageCountReceived;
-    double priceReceived;
-
-
-    ImageView comicsImage;
-    MainPresenterImpl presenter;
-    View view;
+    private TextView title, price, author, description, pageCount;
+    private ImageView comicsImage;
+    private View view;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.row_details, container, false);
 
-        initlialiseViews();
-        presenter = new MainPresenterImpl(this, getActivity());
+        initaliseViews();
         displayComicsDetails();
         return view;
     }
@@ -49,12 +41,12 @@ public class DetailsFragment extends Fragment implements DetailsView {
     public void displayComicsDetails() {
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            titleReceived = bundle.getString("TITLE");
-            descriptionReceived = bundle.getString("DESC");
-            authorNameReceived = bundle.getString("AUTHOR");
-            pageCountReceived = bundle.getInt("PAGE_COUNT");
-            priceReceived = bundle.getDouble("PRICE");
-            imagePathReceived = bundle.getString("IMAGE_PATH");
+            String  titleReceived = bundle.getString("TITLE");
+            String descriptionReceived = bundle.getString("DESC");
+            String authorNameReceived = bundle.getString("AUTHOR");
+            int pageCountReceived = bundle.getInt("PAGE_COUNT");
+            double priceReceived = bundle.getDouble("PRICE");
+            String imagePathReceived = bundle.getString("IMAGE_PATH");
 
             if (titleReceived != null) {
                 title.setText(titleReceived);
@@ -66,7 +58,6 @@ public class DetailsFragment extends Fragment implements DetailsView {
                 author.setText(authorNameReceived);
             }
             if (imagePathReceived != null) {
-
                 Picasso.with(getActivity()).load(imagePathReceived).placeholder(R.mipmap.ic_launcher).into(comicsImage);
             } else {
                 Picasso.with(getActivity()).load(R.mipmap.ic_launcher).into(comicsImage);
@@ -74,12 +65,10 @@ public class DetailsFragment extends Fragment implements DetailsView {
             pageCount.setText(String.valueOf(pageCountReceived));
             price.setText(String.valueOf(priceReceived));
         }
-
-
     }
 
 
-    private void initlialiseViews() {
+    private void initaliseViews() {
         title = (TextView) view.findViewById(R.id.title);
         description = (TextView) view.findViewById(R.id.description);
         author = (TextView) view.findViewById(R.id.author);

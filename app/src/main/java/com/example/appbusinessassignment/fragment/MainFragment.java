@@ -1,5 +1,6 @@
 package com.example.appbusinessassignment.fragment;
 
+import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -20,25 +21,25 @@ import com.example.appbusinessassignment.model.Results;
 import com.example.appbusinessassignment.presenter.MainPresenterImpl;
 import com.example.appbusinessassignment.view.MainView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by piubips on 03/04/2017.
+ * Created by Piali on 03/04/2017.
+ * main fragment
  */
 
 public class MainFragment extends Fragment implements MainView {
 
-    ProgressDialog progressDialog;
-    MainPresenterImpl presenter;;
-    CustomMainListAdapter customMainListAdapter;
-    RecyclerView recyclerView;
-    TextView minimumBudgetText, maximumBudgetText;
-    EditText enterBudgetEdit;
-    Button filterButton;
-
-
-
-    View view;
+    private ProgressDialog progressDialog;
+    private RecyclerView recyclerView;
+    private TextView minimumBudgetText, maximumBudgetText;
+    private View view;
+    private List<Results> results;
+    private List<Results> filteredResultsList;
+    private CustomMainListAdapter customMainListAdapter;
+    private EditText enterBudgetEdit;
+    private Button filterButton;
 
     @Nullable
     @Override
@@ -48,13 +49,42 @@ public class MainFragment extends Fragment implements MainView {
         //initialise Views
         minimumBudgetText = (TextView) view.findViewById(R.id.minBudgetText);
         maximumBudgetText = (TextView) view.findViewById(R.id.maxBudgetText);
-        enterBudgetEdit = (EditText) view.findViewById(R.id.enterBudgetEdit);
-        filterButton = (Button) view.findViewById(R.id.filterButton);
+         enterBudgetEdit = (EditText) view.findViewById(R.id.enterBudgetEdit);
+        enterBudgetEdit.setEnabled(false);
+         filterButton = (Button) view.findViewById(R.id.filterButton);
+        filterButton.setEnabled(false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
 
         //
-        presenter = new MainPresenterImpl(this,getActivity());
-        presenter.loadComicsList();
+        MainPresenterImpl mainPresenter = new MainPresenterImpl(this);
+        mainPresenter.loadComicsList();
+
+        filterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String filteredText = enterBudgetEdit.getText().toString();
+                if(filteredText.length()==0){
+                    filteredResultsList.clear();
+                    filteredResultsList.addAll(results);
+                    customMainListAdapter.notifyDataSetChanged();
+                }else{
+                    filteredResultsList.clear();
+                    for(int i=0;i<results.size();i++){
+                        Results result = results.get(i);
+                        if(result!=null){
+                            if(result.getPrices()!=null && result.getPrices().size()>0 && result.getPrices().get(0)!=null){
+                                String price = String.valueOf(result.getPrices().get(0).getPrice());
+                                if(price.equalsIgnoreCase(filteredText)){
+                                    filteredResultsList.add(result);
+                                }
+                            }
+                        }
+                    }
+                    customMainListAdapter.notifyDataSetChanged();
+                }
+            }
+        });
+
 
         return view;
     }
@@ -72,18 +102,25 @@ public class MainFragment extends Fragment implements MainView {
     }
 
     @Override
-    public void displayComicsList(List<Results> results) {
+    public void displayComicsList(final List<Results> results) {
+        this.results = new ArrayList<>(results);
+        this.filteredResultsList = new ArrayList<>(results);
+        filterButton.setEnabled(true);
+        enterBudgetEdit.setEnabled(true);
         recyclerView = (RecyclerView)view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        customMainListAdapter=new CustomMainListAdapter(getActivity(),results);
+         customMainListAdapter=new CustomMainListAdapter(getActivity(),filteredResultsList);
         recyclerView.setAdapter(customMainListAdapter);
+
+
     }
 
     @Override
     public void showError(Throwable throwable) {
-        Toast.makeText(getActivity(), throwable.getMessage().toString(),Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), throwable.getMessage(),Toast.LENGTH_LONG).show();
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void displayBudgetRange(double minBudget, double maxBudget) {
         minimumBudgetText.setText("$" + String.valueOf(minBudget) + " " + "To");

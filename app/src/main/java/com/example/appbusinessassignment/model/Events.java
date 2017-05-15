@@ -4,9 +4,10 @@ import java.util.List;
 
 /**
  * Created by Vikash on 16-04-2017.
+ * Events
  */
 
-public class Events {
+ class Events {
 
     private int available;
     private String collectionURI;

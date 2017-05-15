@@ -1,5 +1,6 @@
 package com.example.appbusinessassignment.adapter;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -18,15 +19,13 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 /**
- * Created by piubips on 22/04/2017.
+ * Created by Piali on 22/04/2017.
  * main list display
  */
 
 public class CustomMainListAdapter extends RecyclerView.Adapter<CustomViewHolder> {
     private Context context;
     private List<Results> resultList;
-    private DetailsFragment detailsFragment;
-    private String fragmentNameTag;
 
 
     public CustomMainListAdapter(Context context, List<Results> resultList) {
@@ -40,6 +39,7 @@ public class CustomMainListAdapter extends RecyclerView.Adapter<CustomViewHolder
         return new CustomViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(CustomViewHolder holder, int position) {
         Results results = resultList.get(holder.getAdapterPosition());
@@ -48,7 +48,8 @@ public class CustomMainListAdapter extends RecyclerView.Adapter<CustomViewHolder
         holder.layoutHolder.setTag(holder);
 
         try {
-            holder.textViewPageCount.setText(results.getPageCount() + " Pages");
+            String pagesLabel = " Pages";
+            holder.textViewPageCount.setText(results.getPageCount() +pagesLabel);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -95,37 +96,46 @@ public class CustomMainListAdapter extends RecyclerView.Adapter<CustomViewHolder
             CustomViewHolder holder = (CustomViewHolder) view.getTag();
             int position = holder.getAdapterPosition();
 
-            //navigating to DetailsFragment to show details view
-            detailsFragment = new DetailsFragment();
-            FragmentManager mFragmentManager = ((Activity) context).getFragmentManager();
-            FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+            if(resultList.get(position)!=null) {
+                //navigating to DetailsFragment to show details view
+                DetailsFragment detailsFragment = new DetailsFragment();
+                FragmentManager fragmentManager = ((Activity) context).getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-            Bundle bundle = new Bundle();
-            // sending imagePath via Bundle
-            if (resultList.get(position).getThumbnail()!=null && resultList.get(position).getThumbnail().getPath()!=null){
-                bundle.putString("IMAGE_PATH",resultList.get(position).getThumbnail().getPath()+"."+resultList.get(position).getThumbnail().getExtension());
-            }
+                Bundle bundle = new Bundle();
+                // sending imagePath via Bundle
+                if (resultList.get(position).getThumbnail() != null && resultList.get(position).getThumbnail().getPath() != null) {
+                    bundle.putString("IMAGE_PATH", resultList.get(position).getThumbnail().getPath() + "." + resultList.get(position).getThumbnail().getExtension());
+                }
 
-            bundle.putString("TITLE", resultList.get(position).getTitle().toString());
-            if (resultList.get(position).getDescription() != null) {
-                bundle.putString("DESC", resultList.get(position).getDescription().toString());
-            }
-            if (resultList.get(position).getCreators() != null) {
-                bundle.putString("AUTHOR", resultList.get(position).getCreators().getItems().get(0).getName());
+                bundle.putString("TITLE", resultList.get(position).getTitle());
+                if (resultList.get(position).getDescription() != null) {
+                    bundle.putString("DESC", resultList.get(position).getDescription().toString());
+                }
+                if (resultList.get(position).getCreators() != null) {
+                    if (resultList.get(position).getCreators().getItems() != null && resultList.get(position).getCreators().getItems().size()>0 && resultList.get(position).getCreators().getItems().get(0) != null && resultList.get(position).getCreators().getItems().get(0).getName() != null)
+                        bundle.putString("AUTHOR", resultList.get(position).getCreators().getItems().get(0).getName());
+                    else
+                        bundle.putString("AUTHOR", "");
 
-            }
-            if (resultList.get(position).getPrices() != null) {
-                bundle.putDouble("PRICE", resultList.get(position).getPrices().get(0).getPrice());
-            }
 
-            bundle.putInt("PAGE_COUNT", (resultList.get(holder.getAdapterPosition()).getPageCount()));
-            detailsFragment.setArguments(bundle);
-            fragmentNameTag = "FragmentDetails";
-            if (mFragmentManager.findFragmentById(R.id.frame_container) != null) {
-                fragmentTransaction.replace(R.id.frame_container, detailsFragment, fragmentNameTag);
-                fragmentTransaction.addToBackStack(fragmentNameTag);
-                fragmentTransaction.commit();
+                }
+                if (resultList.get(position).getPrices() != null) {
+                    if ( resultList.get(position).getPrices().size()>0 && resultList.get(position).getPrices().get(0) != null && resultList.get(position).getPrices().get(0).getPrice() != 0.0)
+                        bundle.putDouble("PRICE", resultList.get(position).getPrices().get(0).getPrice());
+                    else
+                        bundle.putString("PRICE", "0.0");
+                }
 
+                bundle.putInt("PAGE_COUNT", (resultList.get(holder.getAdapterPosition()).getPageCount()));
+                detailsFragment.setArguments(bundle);
+                String fragmentNameTag = "FragmentDetails";
+                if (fragmentManager.findFragmentById(R.id.frame_container) != null) {
+                    fragmentTransaction.replace(R.id.frame_container, detailsFragment, fragmentNameTag);
+                    fragmentTransaction.addToBackStack(fragmentNameTag);
+                    fragmentTransaction.commit();
+
+                }
             }
         }
     };

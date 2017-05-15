@@ -2,9 +2,10 @@ package com.example.appbusinessassignment.model;
 
 /**
  * Created by Vikash on 16-04-2017.
+ * Urls
  */
 
-public class Urls {
+ class Urls {
 
     private String type;
     private String url;

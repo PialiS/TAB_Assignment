@@ -2,9 +2,10 @@ package com.example.appbusinessassignment.model;
 
 /**
  * Created by Vikash on 16-04-2017.
+ * Series
  */
 
-public class Series {
+ class Series {
 
     private String resourceURI;
     private String name;

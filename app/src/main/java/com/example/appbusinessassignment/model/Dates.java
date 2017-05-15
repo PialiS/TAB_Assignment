@@ -2,9 +2,10 @@ package com.example.appbusinessassignment.model;
 
 /**
  * Created by Vikash on 16-04-2017.
+ * Dates
  */
 
-public class Dates {
+ class Dates {
 
     private String type;
     private String date;

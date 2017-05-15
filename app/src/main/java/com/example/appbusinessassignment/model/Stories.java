@@ -4,9 +4,10 @@ import java.util.List;
 
 /**
  * Created by Vikash on 16-04-2017.
+ * Stories
  */
 
-public class Stories {
+ class Stories {
 
     private int available;
     private String collectionURI;

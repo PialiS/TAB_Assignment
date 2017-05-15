@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.example.appbusinessassignment.R;
 
 /**
- * Created by piubips on 03/04/2017.
+ * Created by Piali on 03/04/2017.
  */
 
 public class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

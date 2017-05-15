@@ -1,12 +1,8 @@
 package com.example.appbusinessassignment.presenter;
 
-import android.content.Context;
-
 import com.example.appbusinessassignment.model.ComicsMainResponse;
-import com.example.appbusinessassignment.model.Results;
 import com.example.appbusinessassignment.service.ApiClient;
 import com.example.appbusinessassignment.utils.Utils;
-import com.example.appbusinessassignment.view.DetailsView;
 import com.example.appbusinessassignment.view.MainView;
 
 import java.util.ArrayList;
@@ -18,27 +14,18 @@ import retrofit2.Response;
 
 /**
  * Created by piubips on 03/04/2017.
+ * MainPresenterImpl
  */
 
-public class MainPresenterImpl extends BasePresenter implements MainPresenter {
+public class MainPresenterImpl implements MainPresenter {
 
     private MainView mainView;
-    private DetailsView detailsView;
-    private MainPresenterImpl mainPresenterImpl;
-    private ApiClient apiClient;
-    List<Results> comedyResultList = new ArrayList<>();
-    private Context context;
-    ComicsMainResponse comicsMainResponseReceived;
+    private ComicsMainResponse comicsMainResponseReceived;
 
-    public MainPresenterImpl(MainView mainView, Context context) {
+    public MainPresenterImpl(MainView mainView) {
         this.mainView = mainView;
-        this.context = context;
     }
 
-    public MainPresenterImpl(DetailsView detailsView, Context context) {
-        this.detailsView = detailsView;
-        this.context = context;
-    }
 
     @Override
     public void loadComicsList() {

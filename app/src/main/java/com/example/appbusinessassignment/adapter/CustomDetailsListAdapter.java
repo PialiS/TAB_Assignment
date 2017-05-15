@@ -1,5 +1,6 @@
 package com.example.appbusinessassignment.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,22 +8,19 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.appbusinessassignment.R;
-import com.example.appbusinessassignment.fragment.DetailsFragment;
 import com.example.appbusinessassignment.model.Results;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 /**
- * Created by piubips on 03/04/2017.
+ * Created by Piali on 03/04/2017.
+ * Details Adapter
  */
 
 public class CustomDetailsListAdapter extends RecyclerView.Adapter<CustomViewHolder>   {
-    Context context;
-    List<Results> resultList;
-    DetailsFragment detailsFragment;
-    String fragmentNameTag;
-
+    private Context context;
+    private List<Results> resultList;
 
     public CustomDetailsListAdapter(Context context, List<Results> resultList) {
         this.context = context;
@@ -35,6 +33,7 @@ public class CustomDetailsListAdapter extends RecyclerView.Adapter<CustomViewHol
         return new CustomViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(CustomViewHolder holder, int position) {
         Results results = resultList.get(holder.getAdapterPosition());

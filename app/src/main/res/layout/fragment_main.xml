@@ -7,10 +7,16 @@
     android:background="@android:color/white">
 
     <LinearLayout
+        android:layout_width="0px"
+        android:layout_height="0px"
+        android:focusable="true"
+        android:focusableInTouchMode="true" />
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:weightSum="100">
+        android:weightSum="100"
+        tools:ignore="UselessParent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -22,16 +28,16 @@
             <RelativeLayout
                 android:id="@+id/filterRelativeLayout"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_weight="10">
 
                 <TextView
                     android:id="@+id/enterBudgetText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
-                    android:layout_marginRight="16dp"
+                    android:layout_marginEnd="16dp"
                     android:text="@string/budget_range"
                     android:textAlignment="center" />
 
@@ -39,16 +45,16 @@
                     android:id="@+id/minBudgetText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_toRightOf="@+id/enterBudgetText"
+                    android:layout_marginStart="8dp"
+                    android:layout_toEndOf="@+id/enterBudgetText"
                     android:text="" />
 
                 <TextView
                     android:id="@+id/maxBudgetText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_toRightOf="@+id/minBudgetText"
+                    android:layout_marginStart="8dp"
+                    android:layout_toEndOf="@+id/minBudgetText"
                     android:text="" />
 
                 <EditText
@@ -57,20 +63,20 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_below="@+id/enterBudgetText"
-                    android:layout_toLeftOf="@+id/filterButton"
+                    android:layout_toStartOf="@+id/filterButton"
                     android:hint="@string/enter_budget"
                     android:textAlignment="center"
                     android:textSize="12sp"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"/>
+                    android:inputType="numberDecimal"/>
 
                 <Button
                     android:id="@+id/filterButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true"
-                    android:text="@string/filter" />
+                    android:layout_alignParentEnd="true"
+                    android:text="@string/filter"
+                    android:filterTouchesWhenObscured="true" />
 
 
             </RelativeLayout>
@@ -107,7 +113,9 @@
             android:layout_gravity="bottom"
             android:layout_weight="10"
             android:clickable="false"
-            android:text="Page Count" />
+            android:text="Page Count"
+            android:filterTouchesWhenObscured="true"
+            tools:ignore="HardcodedText" />
 
     </LinearLayout>
 
