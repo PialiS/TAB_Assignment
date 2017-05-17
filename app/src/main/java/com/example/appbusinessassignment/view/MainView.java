@@ -19,4 +19,6 @@ public interface MainView {
     void displayBudgetRange(double minBudget,double maxBudget);
     void displayTotalPageCount(int totalPageCount);
 
+
+    void hi();
 }
