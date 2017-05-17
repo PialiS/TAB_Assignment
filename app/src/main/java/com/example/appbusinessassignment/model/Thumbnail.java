@@ -2,7 +2,7 @@ package com.example.appbusinessassignment.model;
 
 
 
- class Thumbnail {
+ public class Thumbnail {
 
     private String path;
     private String extension;
