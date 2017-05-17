@@ -40,6 +40,7 @@ public class MainFragment extends Fragment implements MainView {
     private CustomMainListAdapter customMainListAdapter;
     private EditText enterBudgetEdit;
     private Button filterButton, pageCountButton;
+    private double minimumBudget,maximumBudget;
 
     @Nullable
     @Override
@@ -65,24 +66,39 @@ public class MainFragment extends Fragment implements MainView {
             @Override
             public void onClick(View view) {
                 String filteredText = enterBudgetEdit.getText().toString();
+
+
                 if (filteredText.length() == 0) {
                     filteredResultsList.clear();
                     filteredResultsList.addAll(results);
                     customMainListAdapter.notifyDataSetChanged();
                 } else {
-                    filteredResultsList.clear();
-                    for (int i = 0; i < results.size(); i++) {
-                        Results result = results.get(i);
-                        if (result != null) {
-                            if (result.getPrices() != null && result.getPrices().size() > 0 && result.getPrices().get(0) != null) {
-                                String price = String.valueOf(result.getPrices().get(0).getPrice());
-                                if (price.equalsIgnoreCase(filteredText)) {
-                                    filteredResultsList.add(result);
+
+                    try {
+                        Double selectedPrice = Double.parseDouble(filteredText);
+                        if(selectedPrice<minimumBudget){
+                            Toast.makeText(getActivity(),"Budget Should not be less than minimum budget",Toast.LENGTH_SHORT).show();
+                        }else if(selectedPrice>maximumBudget){
+                            Toast.makeText(getActivity(),"Budget Should not be less than maximum budget",Toast.LENGTH_SHORT).show();
+                        }else{
+                            filteredResultsList.clear();
+                            for (int i = 0; i < results.size(); i++) {
+                                Results result = results.get(i);
+                                if (result != null) {
+                                    if (result.getPrices() != null && result.getPrices().size() > 0 && result.getPrices().get(0) != null) {
+                                        double originalPrice = result.getPrices().get(0).getPrice();
+                                        if (originalPrice<=selectedPrice && originalPrice>=minimumBudget ) {
+                                            filteredResultsList.add(result);
+                                        }
+                                    }
                                 }
                             }
+                            customMainListAdapter.notifyDataSetChanged();
                         }
+                    } catch (NumberFormatException e) {
+                        Toast.makeText(getActivity(),"Please Enter Correct Budget",Toast.LENGTH_SHORT).show();
                     }
-                    customMainListAdapter.notifyDataSetChanged();
+
                 }
             }
         });
@@ -124,8 +140,10 @@ public class MainFragment extends Fragment implements MainView {
     @SuppressLint("SetTextI18n")
     @Override
     public void displayBudgetRange(double minBudget, double maxBudget) {
-        minimumBudgetText.setText("$" + String.valueOf(minBudget) + " " + "To");
-        maximumBudgetText.setText("$" + String.valueOf(maxBudget));
+        minimumBudget = minBudget;
+        maximumBudget = maxBudget;
+        minimumBudgetText.setText("$" + String.valueOf(minimumBudget) + " " + "To");
+        maximumBudgetText.setText("$" + String.valueOf(maximumBudget));
 
     }
 
