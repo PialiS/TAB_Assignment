@@ -5,10 +5,12 @@ package com.example.appbusinessassignment.presenter;
  * MainPresenter
  */
 
- interface MainPresenter {
+interface MainPresenter {
 
-   void loadComicsList();
+    void loadComicsList();
 
-  void calculateMaxMinBudget();
+    void calculateMaxMinBudget();
+
+    void calculateTotalPageCount();
 
 }

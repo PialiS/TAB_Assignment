@@ -2,12 +2,9 @@ package com.example.appbusinessassignment.model;
 
 import java.util.List;
 
-/**
- * Created by Vikash on 16-04-2017.
- * Results
- */
 
-public class Results {
+
+ public class Results {
 
     private int id;
     private int digitalId;

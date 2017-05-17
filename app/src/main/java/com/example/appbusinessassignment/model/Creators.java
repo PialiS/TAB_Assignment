@@ -2,10 +2,7 @@ package com.example.appbusinessassignment.model;
 
 import java.util.List;
 
-/**
- * Created by Vikash on 16-04-2017.
- * Creators
- */
+
 
 public class Creators {
 

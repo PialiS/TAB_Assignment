@@ -39,42 +39,44 @@ public class MainFragment extends Fragment implements MainView {
     private List<Results> filteredResultsList;
     private CustomMainListAdapter customMainListAdapter;
     private EditText enterBudgetEdit;
-    private Button filterButton;
+    private Button filterButton, pageCountButton;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-         view=inflater.inflate(R.layout.fragment_main,container,false);
+        view = inflater.inflate(R.layout.fragment_main, container, false);
 
         //initialise Views
         minimumBudgetText = (TextView) view.findViewById(R.id.minBudgetText);
         maximumBudgetText = (TextView) view.findViewById(R.id.maxBudgetText);
-         enterBudgetEdit = (EditText) view.findViewById(R.id.enterBudgetEdit);
+        enterBudgetEdit = (EditText) view.findViewById(R.id.enterBudgetEdit);
         enterBudgetEdit.setEnabled(false);
-         filterButton = (Button) view.findViewById(R.id.filterButton);
+        filterButton = (Button) view.findViewById(R.id.filterButton);
         filterButton.setEnabled(false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        pageCountButton = (Button) view.findViewById(R.id.pageCountBtn);
 
         //
         MainPresenterImpl mainPresenter = new MainPresenterImpl(this);
         mainPresenter.loadComicsList();
 
+
         filterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String filteredText = enterBudgetEdit.getText().toString();
-                if(filteredText.length()==0){
+                if (filteredText.length() == 0) {
                     filteredResultsList.clear();
                     filteredResultsList.addAll(results);
                     customMainListAdapter.notifyDataSetChanged();
-                }else{
+                } else {
                     filteredResultsList.clear();
-                    for(int i=0;i<results.size();i++){
+                    for (int i = 0; i < results.size(); i++) {
                         Results result = results.get(i);
-                        if(result!=null){
-                            if(result.getPrices()!=null && result.getPrices().size()>0 && result.getPrices().get(0)!=null){
+                        if (result != null) {
+                            if (result.getPrices() != null && result.getPrices().size() > 0 && result.getPrices().get(0) != null) {
                                 String price = String.valueOf(result.getPrices().get(0).getPrice());
-                                if(price.equalsIgnoreCase(filteredText)){
+                                if (price.equalsIgnoreCase(filteredText)) {
                                     filteredResultsList.add(result);
                                 }
                             }
@@ -84,7 +86,6 @@ public class MainFragment extends Fragment implements MainView {
                 }
             }
         });
-
 
         return view;
     }
@@ -107,9 +108,9 @@ public class MainFragment extends Fragment implements MainView {
         this.filteredResultsList = new ArrayList<>(results);
         filterButton.setEnabled(true);
         enterBudgetEdit.setEnabled(true);
-        recyclerView = (RecyclerView)view.findViewById(R.id.recycler_view);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-         customMainListAdapter=new CustomMainListAdapter(getActivity(),filteredResultsList);
+        customMainListAdapter = new CustomMainListAdapter(getActivity(), filteredResultsList);
         recyclerView.setAdapter(customMainListAdapter);
 
 
@@ -117,7 +118,7 @@ public class MainFragment extends Fragment implements MainView {
 
     @Override
     public void showError(Throwable throwable) {
-        Toast.makeText(getActivity(), throwable.getMessage(),Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_LONG).show();
     }
 
     @SuppressLint("SetTextI18n")
@@ -127,4 +128,11 @@ public class MainFragment extends Fragment implements MainView {
         maximumBudgetText.setText("$" + String.valueOf(maxBudget));
 
     }
+
+    @Override
+    public void displayTotalPageCount(int totalPageCount) {
+        pageCountButton.setText("Page Count: " + totalPageCount);
+    }
+
+
 }

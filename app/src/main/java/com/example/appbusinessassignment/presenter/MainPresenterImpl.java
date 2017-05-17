@@ -39,6 +39,7 @@ public class MainPresenterImpl implements MainPresenter {
                 mainView.displayComicsList(comicsMainResponseReceived.getData().getResults());
 
                 calculateMaxMinBudget();
+                calculateTotalPageCount();
             }
 
             @Override
@@ -55,16 +56,15 @@ public class MainPresenterImpl implements MainPresenter {
     public void calculateMaxMinBudget() {
 
         List<Double> priceList = new ArrayList<>();
-        Double maxmumPrice, priceObtained;
-        Double minimumPrice;
+        Double maxmumPrice = 0.0, priceObtained;
+        Double minimumPrice = 0.0;
 
         for (int i = 0; i < comicsMainResponseReceived.getData().getResults().size(); i++) {
             double prices = comicsMainResponseReceived.getData().getResults().get(i).getPrices().get(0).getPrice();
             priceList.add(prices);
 
-            minimumPrice = priceList.get(0);
-            maxmumPrice = priceList.get(0);
-
+            //  minimumPrice = priceList.get(0);
+            //   maxmumPrice = priceList.get(0);
 
             for (int j = 0; j < priceList.size(); j++) {
                 priceObtained = priceList.get(i);
@@ -75,12 +75,26 @@ public class MainPresenterImpl implements MainPresenter {
                     maxmumPrice = priceObtained;
                 }
 
-                mainView.displayBudgetRange(minimumPrice, maxmumPrice);
-
             }
 
         }
 
+        mainView.displayBudgetRange(minimumPrice, maxmumPrice);
+    }
+
+    @Override
+    public void calculateTotalPageCount() {
+
+        int sumTotalPageCount=0;
+
+        for (int i=0;i<comicsMainResponseReceived.getData().getResults().size();i++){
+
+            int pageCount=comicsMainResponseReceived.getData().getResults().get(i).getPageCount();
+            sumTotalPageCount=sumTotalPageCount+pageCount;
+
+
+        }
+        mainView.displayTotalPageCount(sumTotalPageCount);
 
     }
 }

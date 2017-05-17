@@ -107,13 +107,12 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/pageCountButton"
+            android:id="@+id/pageCountBtn"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_gravity="bottom"
             android:layout_weight="10"
             android:clickable="false"
-            android:text="Page Count"
             android:filterTouchesWhenObscured="true"
             tools:ignore="HardcodedText" />
 

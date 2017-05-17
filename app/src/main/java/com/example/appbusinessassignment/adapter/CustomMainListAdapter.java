@@ -19,7 +19,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 /**
- * Created by Piali on 22/04/2017.
+ *
  * main list display
  */
 
