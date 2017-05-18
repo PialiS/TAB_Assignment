@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +18,14 @@ import android.widget.Toast;
 
 import com.example.appbusinessassignment.R;
 import com.example.appbusinessassignment.adapter.CustomMainListAdapter;
+import com.example.appbusinessassignment.database.DaoSession;
+import com.example.appbusinessassignment.database.comicData;
+import com.example.appbusinessassignment.database.comicDataDao;
+import com.example.appbusinessassignment.database.minmaxData;
+import com.example.appbusinessassignment.database.minmaxDataDao;
 import com.example.appbusinessassignment.model.Results;
 import com.example.appbusinessassignment.presenter.MainPresenterImpl;
+import com.example.appbusinessassignment.utils.DatabaseUtil;
 import com.example.appbusinessassignment.view.MainView;
 
 import java.util.ArrayList;
@@ -41,6 +48,10 @@ public class MainFragment extends Fragment implements MainView {
     private EditText enterBudgetEdit;
     private Button filterButton, pageCountButton;
     private double minimumBudget,maximumBudget;
+    private DatabaseUtil databaseUtil;
+    private DaoSession daoSession;
+    private comicDataDao comicDataDao;
+    private minmaxDataDao minmaxDataDao;
 
     @Nullable
     @Override
@@ -60,6 +71,8 @@ public class MainFragment extends Fragment implements MainView {
         //
         MainPresenterImpl mainPresenter = new MainPresenterImpl(this);
         mainPresenter.loadComicsList();
+
+        databaseUtil = new DatabaseUtil();
 
 
         filterButton.setOnClickListener(new View.OnClickListener() {
@@ -130,6 +143,56 @@ public class MainFragment extends Fragment implements MainView {
         recyclerView.setAdapter(customMainListAdapter);
 
 
+        try {
+
+            daoSession = databaseUtil.StartSession(getActivity());
+            comicDataDao = daoSession.getComicDataDao();
+            comicDataDao.deleteAll();
+
+            for(Results results1:filteredResultsList) {
+                comicData comicData = new comicData();
+
+                //id
+                comicData.setId(results1.getId());
+
+                //title
+                if(results1.getTitle()!=null)
+                comicData.setTitle(results1.getTitle());
+
+                //description
+                if(results1.getDescription()!=null)
+                    comicData.setDescription(results1.getDescription().toString());
+
+
+
+                //image
+                if(results1.getThumbnail()!=null && results1.getThumbnail().getPath()!=null){
+                    comicData.setImage(results1.getThumbnail().getPath());
+                }
+
+                //image extension
+                if(results1.getThumbnail()!=null && results1.getThumbnail().getExtension()!=null){
+                    comicData.setImageExtension(results1.getThumbnail().getExtension());
+                }
+
+                if(results1.getPrices()!=null  && results1.getPrices().size()>0 && results1.getPrices().get(0)!=null)                           comicData.setPrice(results1.getPrices().get(0).getPrice());
+
+                //page count
+                    comicData.setPageCount(results1.getPageCount());
+
+                //author
+                if(results1.getCreators()!=null && results1.getCreators().getItems()!=null && results1.getCreators().getItems().size()>0 && results1.getCreators().getItems().get(0)!=null && results1.getCreators().getItems().get(0).getName()!=null)
+                    comicData.setAuthor(results1.getCreators().getItems().get(0).getName());
+
+                comicDataDao.insert(comicData);
+                Log.d("Inserted ",results1.getTitle());
+
+            }
+            databaseUtil.closeSession();
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
     }
 
     @Override
@@ -144,6 +207,22 @@ public class MainFragment extends Fragment implements MainView {
         maximumBudget = maxBudget;
         minimumBudgetText.setText("$" + String.valueOf(minimumBudget) + " " + "To");
         maximumBudgetText.setText("$" + String.valueOf(maximumBudget));
+
+        try {
+
+            daoSession = databaseUtil.StartSession(getActivity());
+            minmaxDataDao = daoSession.getMinmaxDataDao();
+            minmaxDataDao.deleteAll();
+
+            minmaxData minmaxData = new minmaxData(maximumBudget,maximumBudget);
+
+            minmaxDataDao.insert(minmaxData);
+
+            databaseUtil.closeSession();
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
 
     }
 
