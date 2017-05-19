@@ -77,14 +77,14 @@ public class MainFragment extends Fragment implements MainView {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         //
-//        if(Utils.isConnectedToNetwork(getActivity())) {
-//            MainPresenterImpl mainPresenter = new MainPresenterImpl(this);
-//            mainPresenter.loadComicsList();
-//        }else{
-//
-//        }
+        if(Utils.isConnectedToNetwork(getActivity())) {
+            MainPresenterImpl mainPresenter = new MainPresenterImpl(this);
+            mainPresenter.loadComicsList();
+        }else{
+            getDataFromDb();
+        }
 
-        getDataFromDb();
+
 
 
 
