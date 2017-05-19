@@ -6,7 +6,35 @@ import java.util.List;
 
  public class Results {
 
-    private int id;
+     public void setId(int id) {
+         this.id = id;
+     }
+
+     public void setTitle(String title) {
+         this.title = title;
+     }
+
+     public void setDescription(Object description) {
+         this.description = description;
+     }
+
+     public void setPageCount(int pageCount) {
+         this.pageCount = pageCount;
+     }
+
+     public void setThumbnail(Thumbnail thumbnail) {
+         this.thumbnail = thumbnail;
+     }
+
+     public void setCreators(Creators creators) {
+         this.creators = creators;
+     }
+
+     public void setPrices(List<Prices> prices) {
+         this.prices = prices;
+     }
+
+     private int id;
     private int digitalId;
     private String title;
     private int issueNumber;

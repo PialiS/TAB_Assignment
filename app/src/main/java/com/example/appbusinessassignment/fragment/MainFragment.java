@@ -23,9 +23,14 @@ import com.example.appbusinessassignment.database.comicData;
 import com.example.appbusinessassignment.database.comicDataDao;
 import com.example.appbusinessassignment.database.minmaxData;
 import com.example.appbusinessassignment.database.minmaxDataDao;
+import com.example.appbusinessassignment.model.Creators;
+import com.example.appbusinessassignment.model.Items;
+import com.example.appbusinessassignment.model.Prices;
 import com.example.appbusinessassignment.model.Results;
+import com.example.appbusinessassignment.model.Thumbnail;
 import com.example.appbusinessassignment.presenter.MainPresenterImpl;
 import com.example.appbusinessassignment.utils.DatabaseUtil;
+import com.example.appbusinessassignment.utils.Utils;
 import com.example.appbusinessassignment.view.MainView;
 
 import java.util.ArrayList;
@@ -67,12 +72,21 @@ public class MainFragment extends Fragment implements MainView {
         filterButton.setEnabled(false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         pageCountButton = (Button) view.findViewById(R.id.pageCountBtn);
+        databaseUtil = new DatabaseUtil();
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         //
-        MainPresenterImpl mainPresenter = new MainPresenterImpl(this);
-        mainPresenter.loadComicsList();
+//        if(Utils.isConnectedToNetwork(getActivity())) {
+//            MainPresenterImpl mainPresenter = new MainPresenterImpl(this);
+//            mainPresenter.loadComicsList();
+//        }else{
+//
+//        }
 
-        databaseUtil = new DatabaseUtil();
+        getDataFromDb();
+
+
 
 
         filterButton.setOnClickListener(new View.OnClickListener() {
@@ -137,12 +151,36 @@ public class MainFragment extends Fragment implements MainView {
         this.filteredResultsList = new ArrayList<>(results);
         filterButton.setEnabled(true);
         enterBudgetEdit.setEnabled(true);
-        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         customMainListAdapter = new CustomMainListAdapter(getActivity(), filteredResultsList);
         recyclerView.setAdapter(customMainListAdapter);
+        insertToDb();
 
 
+    }
+
+    @Override
+    public void showError(Throwable throwable) {
+        Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_LONG).show();
+    }
+
+    @SuppressLint("SetTextI18n")
+    @Override
+    public void displayBudgetRange(double minBudget, double maxBudget) {
+        minimumBudget = minBudget;
+        maximumBudget = maxBudget;
+        minimumBudgetText.setText("$" + String.valueOf(minimumBudget) + " " + "To");
+        maximumBudgetText.setText("$" + String.valueOf(maximumBudget));
+
+        insertMaxMinBudget();
+
+    }
+
+    @Override
+    public void displayTotalPageCount(int totalPageCount) {
+        pageCountButton.setText("Page Count: " + totalPageCount);
+    }
+
+    private void insertToDb(){
         try {
 
             daoSession = databaseUtil.StartSession(getActivity());
@@ -157,7 +195,7 @@ public class MainFragment extends Fragment implements MainView {
 
                 //title
                 if(results1.getTitle()!=null)
-                comicData.setTitle(results1.getTitle());
+                    comicData.setTitle(results1.getTitle());
 
                 //description
                 if(results1.getDescription()!=null)
@@ -178,7 +216,7 @@ public class MainFragment extends Fragment implements MainView {
                 if(results1.getPrices()!=null  && results1.getPrices().size()>0 && results1.getPrices().get(0)!=null)                           comicData.setPrice(results1.getPrices().get(0).getPrice());
 
                 //page count
-                    comicData.setPageCount(results1.getPageCount());
+                comicData.setPageCount(results1.getPageCount());
 
                 //author
                 if(results1.getCreators()!=null && results1.getCreators().getItems()!=null && results1.getCreators().getItems().size()>0 && results1.getCreators().getItems().get(0)!=null && results1.getCreators().getItems().get(0).getName()!=null)
@@ -195,26 +233,14 @@ public class MainFragment extends Fragment implements MainView {
         }
     }
 
-    @Override
-    public void showError(Throwable throwable) {
-        Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_LONG).show();
-    }
-
-    @SuppressLint("SetTextI18n")
-    @Override
-    public void displayBudgetRange(double minBudget, double maxBudget) {
-        minimumBudget = minBudget;
-        maximumBudget = maxBudget;
-        minimumBudgetText.setText("$" + String.valueOf(minimumBudget) + " " + "To");
-        maximumBudgetText.setText("$" + String.valueOf(maximumBudget));
-
+    private void insertMaxMinBudget(){
         try {
 
             daoSession = databaseUtil.StartSession(getActivity());
             minmaxDataDao = daoSession.getMinmaxDataDao();
             minmaxDataDao.deleteAll();
 
-            minmaxData minmaxData = new minmaxData(maximumBudget,maximumBudget);
+            minmaxData minmaxData = new minmaxData(minimumBudget,maximumBudget);
 
             minmaxDataDao.insert(minmaxData);
 
@@ -223,13 +249,102 @@ public class MainFragment extends Fragment implements MainView {
             e.printStackTrace();
 
         }
-
     }
 
-    @Override
-    public void displayTotalPageCount(int totalPageCount) {
-        pageCountButton.setText("Page Count: " + totalPageCount);
-    }
+    private void getDataFromDb(){
 
+
+        try {
+            daoSession = databaseUtil.StartSession(getActivity());
+            minmaxDataDao = daoSession.getMinmaxDataDao();
+            List<minmaxData> minmaxData = minmaxDataDao.queryBuilder().list();
+            databaseUtil.closeSession();
+
+            if(minmaxData!=null && minmaxData.size()>0 && minmaxData.get(0)!=null){
+                if(minmaxData.get(0).getMinPrice()!=null){
+                    minimumBudget = minmaxData.get(0).getMinPrice();
+                    minimumBudgetText.setText("$" + String.valueOf(minimumBudget) + " " + "To");
+                    enterBudgetEdit.setEnabled(true);
+                    filterButton.setEnabled(true);
+
+                }
+                if(minmaxData.get(0).getMaxPrice()!=null){
+                    maximumBudget = minmaxData.get(0).getMaxPrice();
+                    maximumBudgetText.setText("$" + String.valueOf(maximumBudget));
+                    enterBudgetEdit.setEnabled(true);
+                    filterButton.setEnabled(true);
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+
+
+
+        try {
+            daoSession = databaseUtil.StartSession(getActivity());
+            comicDataDao = daoSession.getComicDataDao();
+            List<comicData> comicDatas = comicDataDao.queryBuilder().list();
+            databaseUtil.closeSession();
+
+            if(comicDatas!=null && comicDatas.size()>0){
+                this.results = new ArrayList<>();
+                this.filteredResultsList = new ArrayList<>();
+                int i=1;
+                for(comicData comicData:comicDatas){
+                    if(comicData!=null){
+                        Results results = new Results();
+                        if(comicData.getId()!=null){
+                            results.setId(comicData.getId());
+                        }
+                        if(comicData.getDescription()!=null){
+                            results.setDescription(comicData.getDescription());
+                        }
+                        if(comicData.getTitle()!=null){
+                            results.setTitle(comicData.getTitle());
+                        }
+                        if(comicData.getPrice()!=null){
+                            List<Prices> prices = new ArrayList<>();
+                            Prices price = new Prices();
+                            price.setPrice(comicData.getPrice());
+                            prices.add(price);
+                            results.setPrices(prices);
+                        }
+                        if(comicData.getAuthor()!=null){
+                            Creators creator = new Creators();
+                            List<Items> itemsList = new ArrayList<>();
+                            Items items = new Items();
+                            items.setName(comicData.getAuthor());
+                            itemsList.add(items);
+                            creator.setItems(itemsList);
+                            results.setCreators(creator);
+                        }
+                        if(comicData.getImage()!=null){
+                            Thumbnail thumbnail = new Thumbnail();
+                            thumbnail.setPath(comicData.getImage());
+
+                            if(comicData.getImageExtension()!=null){
+                                thumbnail.setExtension(comicData.getImageExtension());
+                            }
+
+                            results.setThumbnail(thumbnail);
+                        }
+
+                        filteredResultsList.add(results);
+                        this.results.add(results);
+                    }
+                }
+
+                customMainListAdapter = new CustomMainListAdapter(getActivity(), filteredResultsList);
+                recyclerView.setAdapter(customMainListAdapter);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+    }
 
 }

@@ -8,7 +8,7 @@ public class GreenDaoGenerator {
 
     public static void main(String[] args) throws Exception {
 
-        int DB_VERSION = 2;
+        int DB_VERSION = 3;
         String DB_PACKAGE_NAME = "com.example.appbusinessassignment.database";
 
         Schema schema = new Schema(DB_VERSION, DB_PACKAGE_NAME);

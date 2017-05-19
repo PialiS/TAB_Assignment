@@ -14,4 +14,12 @@ package com.example.appbusinessassignment.model;
     public String getExtension() {
         return extension;
     }
-}
+
+     public void setPath(String path) {
+         this.path = path;
+     }
+
+     public void setExtension(String extension) {
+         this.extension = extension;
+     }
+ }

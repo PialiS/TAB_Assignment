@@ -8,7 +8,19 @@ package com.example.appbusinessassignment.model;
     private String name;
     private String role;
 
-    public String getResourceURI() {
+     public void setResourceURI(String resourceURI) {
+         this.resourceURI = resourceURI;
+     }
+
+     public void setName(String name) {
+         this.name = name;
+     }
+
+     public void setRole(String role) {
+         this.role = role;
+     }
+
+     public String getResourceURI() {
         return resourceURI;
     }
 

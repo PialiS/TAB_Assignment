@@ -7,7 +7,15 @@ package com.example.appbusinessassignment.model;
     private String type;
     private double price;
 
-    public String getType() {
+     public void setType(String type) {
+         this.type = type;
+     }
+
+     public void setPrice(double price) {
+         this.price = price;
+     }
+
+     public String getType() {
         return type;
     }
 

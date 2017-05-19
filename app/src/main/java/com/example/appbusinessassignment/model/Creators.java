@@ -10,6 +10,10 @@ public class Creators {
     private String collectionURI;
     private int returned;
 
+    public void setItems(List<Items> items) {
+        this.items = items;
+    }
+
     private List<Items> items;
 
     public int getAvailable() {
